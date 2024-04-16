@@ -52,21 +52,32 @@ struct TempPokemon: Codable {
     }
     
     init(from decoder: Decoder) throws {
+        // デコーダーからキーによって区切られたコンテナを取得
         let container = try decoder.container(keyedBy: PokemonKeys.self)
+        
+        // *[id]：取得したコンテナからidキーに対応する値を読み取り、それをInt型としてデコードする
         id = try container.decode(Int.self, forKey: .id)
+        // *[name]：取得したコンテナからnameキーに対応する値を読み取り、それをString型としてデコードする
         name = try container.decode(String.self, forKey: .name)
         
+        // *[types]
         var decodesTypes: [String] = []
+        // typesキーの配列をアンキードコンテナとして読み込む
         var typesContainer = try container.nestedUnkeyedContainer(forKey: .types)
+        
+        // アンキードコンテナが終わるまでループを続け各要素を処理する
         while !typesContainer.isAtEnd {
+            // 各要素を一つずつ処理して、その中のtypeキーにアクセスする
             let typesDictionnaryContainer = try typesContainer.nestedContainer(keyedBy: PokemonKeys.TypeDictionaryKeys.self)
             let typeContainer = try typesDictionnaryContainer.nestedContainer(keyedBy: PokemonKeys.TypeDictionaryKeys.TypeKeys.self, forKey: .type)
             
+            // typesDictionnaryContainerからnameキーに基づいてタイプ名がデコードされる
             let type = try typeContainer.decode(String.self, forKey: .name)
             decodesTypes.append(type)
         }
         types = decodesTypes
         
+        // *[stats]
         var statsContainer = try container.nestedUnkeyedContainer(forKey: .stats)
         while !statsContainer.isAtEnd {
             let statsDictionaryContainer = try statsContainer.nestedContainer(keyedBy: PokemonKeys.StatDictionarykeys.self)
@@ -96,6 +107,7 @@ struct TempPokemon: Codable {
             }
         }
         
+        // *[sprites]
         let spriteContainer = try container.nestedContainer(keyedBy: PokemonKeys.SpriteKeys.self, forKey: .sprites)
         sprite = try spriteContainer.decode(URL.self, forKey: .sprite)
         shiny = try spriteContainer.decode(URL.self, forKey: .shiny)
