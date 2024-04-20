@@ -26,4 +26,25 @@ extension Pokemon {
             return "hi"
         }
     }
+    
+    var stats: [Stat] {
+        [
+            Stat(id: 1, label: "HP", value: self.hp),
+            Stat(id: 2, label: "Attack", value: self.attack),
+            Stat(id: 3, label: "Defense", value: self.defense),
+            Stat(id: 4, label: "Special Attack", value: self.specialAttack),
+            Stat(id: 5, label: "Special Defense", value: self.specialDefense),
+            Stat(id: 6, label: "Speed", value: self.speed)
+        ]
+    }
+    
+    var highestStat: Stat {
+        stats.max { $0.value < $1.value }!
+    }
+}
+
+struct Stat: Identifiable {
+    let id: Int
+    let label: String
+    let value: Int16
 }
