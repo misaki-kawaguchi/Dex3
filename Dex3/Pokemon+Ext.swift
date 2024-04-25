@@ -41,6 +41,13 @@ extension Pokemon {
     var highestStat: Stat {
         stats.max { $0.value < $1.value }!
     }
+    
+    func organizeTypes() {
+        if self.types?.count == 2 && self.types![0] == "normal" {
+            // 0番目と1番目を交換する
+            self.types!.swapAt(0, 1)
+        }
+    }
 }
 
 struct Stat: Identifiable {
