@@ -18,7 +18,7 @@ struct FetchController {
         var allPokemon: [TempPokemon] = []
         
         // パスにクエリパラメータを追加
-        var fetchComponents  = URLComponents(url: baseURL, resolvingAgainstBaseURL: true)
+        var fetchComponents = URLComponents(url: baseURL, resolvingAgainstBaseURL: true)
         fetchComponents?.queryItems = [URLQueryItem(name: "limit", value: "386")]
         
         // fetchURLが正しく生成されたことを確認
@@ -38,13 +38,15 @@ struct FetchController {
         // dataをJSONデータ→Foundationオブジェクトに変換する。取得したオブジェクトを[String: Any]型にキャスト。失敗するとnilが返される。
         // pokeDictionnaryからキーが"result"の値を取り出し、それを[[String: String]]型にキャストする。
         // いずれかが失敗すれば、NetworkError.badDataエラーがスローされる。
-        guard let pokeDictionnary = try JSONSerialization.jsonObject(with: data) as? [String: Any], let pokedex = pokeDictionnary["result"] as? [[String: String]] else {
+        guard let pokeDictionary = try JSONSerialization.jsonObject(with: data) as? [String: Any],
+              let pokedex = pokeDictionary["results"] as? [[String: Any]] else {
+            print("bad data")
             throw NetworkError.badData
         }
         
         for pokemon in pokedex {
             // pokemon["url"]を取得しfetcuPokemonしたレスポンスをallPokemonに追加する
-            if let url = pokemon["url"] {
+            if let url = pokemon["url"] as? String {
                 allPokemon.append(try await fetchPokemon(from: URL(string: url)!))
             }
         }
@@ -59,10 +61,13 @@ struct FetchController {
             throw NetworkError.badResponse
         }
         
-        let tempPokemon = try JSONDecoder().decode(TempPokemon.self, from: data)
-        
-        print("fetch \(tempPokemon.id)： \(tempPokemon.name)")
-        
-        return tempPokemon
+        do {
+            let tempPokemon = try JSONDecoder().decode(TempPokemon.self, from: data)
+            print("fetch \(tempPokemon.id)： \(tempPokemon.name)")
+            return tempPokemon
+        } catch {
+            print("JSON Decoding Error: \(error)")
+            throw NetworkError.badData
+        }
     }
 }

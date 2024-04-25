@@ -63,7 +63,7 @@ struct PokemonDetail: View {
                         Image(systemName: "wand.and.stars")
                             .foregroundColor(.yellow)
                     } else {
-                        Image(systemName: "wand.wand.stars.inverse")
+                        Image(systemName: "wand.and.stars.inverse")
                     }
                 }
             }
