@@ -76,9 +76,30 @@ extension ConfigurationAppIntent {
     }
 }
 
-#Preview(as: .systemSmall) {
-    Dex3Widget()
-} timeline: {
-    SimpleEntry(date: .now, configuration: .smiley)
-    SimpleEntry(date: .now, configuration: .starEyes)
+extension View {
+    func widgetBackground(_ color: Color) -> some View {
+        if #available(iOSApplicationExtension 17.0, *) {
+            return containerBackground(color, for: .widget)
+        } else {
+            return background(color)
+        }
+    }
+}
+
+struct Dex3Widget_Previews: PreviewProvider {
+    static var previews: some View {
+        Group {
+            Dex3WidgetEntryView(entry: SimpleEntry(date: .now, configuration: .smiley))
+                .previewContext(WidgetPreviewContext(family: .systemSmall))
+                .widgetBackground(.clear)
+            
+            Dex3WidgetEntryView(entry: SimpleEntry(date: .now, configuration: .starEyes))
+                .previewContext(WidgetPreviewContext(family: .systemMedium))
+                .widgetBackground(.clear)
+            
+            Dex3WidgetEntryView(entry: SimpleEntry(date: .now, configuration: .smiley))
+                .previewContext(WidgetPreviewContext(family: .systemLarge))
+                .widgetBackground(.clear)
+        }
+    }
 }
