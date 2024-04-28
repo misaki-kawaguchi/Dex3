@@ -9,6 +9,7 @@ import SwiftUI
 import CoreData
 
 struct PokemonDetail: View {
+    @Environment(\.managedObjectContext) private var viewContext
     // データをビューの階層内のどの場所からでもアクセスできる
     @EnvironmentObject var pokemon: Pokemon
     @State var showShiny = false
@@ -43,6 +44,27 @@ struct PokemonDetail: View {
                         .cornerRadius(50)
                 }
                 Spacer()
+                
+                Button {
+                    withAnimation {
+                        pokemon.favorite.toggle()
+                        
+                        do {
+                            try viewContext.save()
+                        } catch {
+                            let nsError = error as NSError
+                            fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+                        }
+                    }
+                } label: {
+                    if pokemon.favorite {
+                        Image(systemName: "star.fill")
+                    } else {
+                        Image(systemName: "star")
+                    }
+                }
+                .font(.largeTitle)
+                .foregroundColor(.yellow)
             }
             .padding()
             
