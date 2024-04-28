@@ -17,6 +17,12 @@
 		1438F6572BDE50EE00A902D4 /* AppIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1438F6562BDE50EE00A902D4 /* AppIntent.swift */; };
 		1438F6592BDE50F000A902D4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1438F6582BDE50F000A902D4 /* Assets.xcassets */; };
 		1438F65D2BDE50F000A902D4 /* Dex3WidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 1438F6492BDE50EE00A902D4 /* Dex3WidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		1438F6622BDE51B800A902D4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 14D247D82BCC9313003C7B05 /* Assets.xcassets */; };
+		1438F6632BDE51D000A902D4 /* Dex3.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 14D247DF2BCC9313003C7B05 /* Dex3.xcdatamodeld */; };
+		1438F6642BDE51DD00A902D4 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D247DD2BCC9313003C7B05 /* Persistence.swift */; };
+		1438F6652BDE51E400A902D4 /* SamplePokemon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A70CC92BD34C340032A448 /* SamplePokemon.swift */; };
+		1438F6662BDE51F600A902D4 /* FetchedImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1438F6412BDE424000A902D4 /* FetchedImage.swift */; };
+		1438F6672BDE51FE00A902D4 /* WidgetPokemon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1438F6432BDE43D000A902D4 /* WidgetPokemon.swift */; };
 		14A250A82BCDE98E0002D93A /* TempPokemon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A250A72BCDE98E0002D93A /* TempPokemon.swift */; };
 		14A70CC62BD1FEF80032A448 /* PokemonViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A70CC52BD1FEF80032A448 /* PokemonViewModel.swift */; };
 		14A70CC82BD348410032A448 /* PokemonDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A70CC72BD348410032A448 /* PokemonDetail.swift */; };
@@ -256,6 +262,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1438F6622BDE51B800A902D4 /* Assets.xcassets in Resources */,
 				1438F6592BDE50F000A902D4 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -276,9 +283,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1438F6672BDE51FE00A902D4 /* WidgetPokemon.swift in Sources */,
 				1438F6532BDE50EE00A902D4 /* Dex3WidgetLiveActivity.swift in Sources */,
 				1438F6572BDE50EE00A902D4 /* AppIntent.swift in Sources */,
 				1438F6552BDE50EE00A902D4 /* Dex3Widget.swift in Sources */,
+				1438F6662BDE51F600A902D4 /* FetchedImage.swift in Sources */,
+				1438F6642BDE51DD00A902D4 /* Persistence.swift in Sources */,
+				1438F6632BDE51D000A902D4 /* Dex3.xcdatamodeld in Sources */,
+				1438F6652BDE51E400A902D4 /* SamplePokemon.swift in Sources */,
 				1438F6512BDE50EE00A902D4 /* Dex3WidgetBundle.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
