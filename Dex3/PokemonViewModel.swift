@@ -32,7 +32,12 @@ class PokemonViewModel: ObservableObject {
         status = .fetching
         
         do {
-            var pokedex = try await controller.fetchAllPokemon()
+            guard var pokedex = try await controller.fetchAllPokemon() else {
+                print("Pokemon have already been got. We good. ")
+                status = .success
+                return
+            }
+            
             pokedex.sort { $0.id < $1.id }
             
             for pokemon in pokedex {

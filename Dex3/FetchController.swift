@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import CoreData
 
 struct FetchController {
     enum NetworkError: Error {
@@ -14,7 +15,11 @@ struct FetchController {
     
     private let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon/")!
     
-    func fetchAllPokemon() async throws -> [TempPokemon] {
+    func fetchAllPokemon() async throws -> [TempPokemon]? {
+        if havePokemon() {
+            return nil
+        }
+        
         var allPokemon: [TempPokemon] = []
         
         // パスにクエリパラメータを追加
@@ -69,5 +74,30 @@ struct FetchController {
             print("JSON Decoding Error: \(error)")
             throw NetworkError.badData
         }
+    }
+    
+    // 特定のポケモンがすでにアプリケーションのデータベースに存在するかどうかをチェックするためのメソッド
+    private func havePokemon() -> Bool {
+        // バックグラウンドでのデータ操作用コンテキストの生成
+        let context = PersistenceController.shared.container.newBackgroundContext()
+        
+        let fetchRequest: NSFetchRequest<Pokemon> = Pokemon.fetchRequest()
+        // データベースから特定の条件に合致するデータのみ抽出する。
+        // idが1または386のエンティティのみを抽出する。
+        fetchRequest.predicate = NSPredicate(format: "id IN %@", [1, 386])
+        
+        do {
+            let checkPokemon = try context.fetch(fetchRequest)
+            
+            // idが1と386のエンティティを取得した場合
+            if checkPokemon.count == 2 {
+                return true
+            }
+        } catch {
+            print("Fetch failed: \(error)")
+            return false
+        }
+        
+        return false
     }
 }
